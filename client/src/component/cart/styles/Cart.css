@@ -1,0 +1,136 @@
+.cart-container {
+    width: 100%;
+    min-height: 100vh;
+    margin-top: -0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 200px;
+}
+
+.heading-container {
+    width: 100%;
+    height: 100px;
+    margin-top: -20px;
+    margin-left: 200px;
+}
+.cart {
+    width: 80%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid black;
+    transition: 1s all ease-in-out;
+
+}
+
+.btn-hover:hover {
+background-color: whitesmoke;
+}
+
+.btn-size:focus  {
+    background-color: black;
+    color: whitesmoke;
+}
+.cart-titles {
+    min-width: 300px;
+    min-height: 250px;
+}
+
+.sizes-btn {
+    display: flex;
+    width: 400px;
+}
+
+.btn-attributes {
+    width: 50px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid black;
+    font-size: 14px;
+    margin: 10px;
+}
+
+.cart-counters {
+    width: 70px;
+    height: 185px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.cart-counters button {
+    width: 50px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid black;
+    font-size: 40px;
+}
+
+.cart-counters p {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.cart-imgs {
+    display: flex;
+
+}
+
+.cart-imgs img {
+    height: 185px;
+    width: 141px;
+    left: 1057px;
+    top: 281px;
+    border-radius: 0px;
+    object-fit: cover;
+    
+}
+
+.remove-item {
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+.remove-item:hover {
+    background-color: whitesmoke;
+    border: 1px solid black;
+}
+.remove-item:active {
+    background-color: white;
+}
+
+.attributes-container {
+    min-width: 200px;
+}
+
+.attributes-container {
+    display: flex;
+    width: 300px;
+}
+
+.attributes-container h6 {
+    font-size: 15px;
+}
+
+@media only screen and (max-width: 1300px) {
+    .cart {
+        margin-right: 100px;
+    }
+    .cart {
+        flex-direction: column;
+    }
+    .pd {
+        width: 170px;
+        padding-right:-100px;
+    }
+  }

@@ -1,0 +1,70 @@
+.actions {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.actions select {
+    cursor: pointer;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80px;
+    height: 40px;
+    font-size: 15px;
+    border: none;
+    text-transform: uppercase;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border-bottom: 1px solid black;
+    /* -webkit-box-shadow: -18px 13px 39px -14px rgba(0,0,0,0.44); 
+    box-shadow: -18px 13px 39px -14px rgba(0,0,0,0.44); */
+}
+
+.actions select:hover {
+    background-color: whitesmoke;
+}
+.actions select:active {
+    background-color: white;
+}
+.currency {
+    padding: 5px;
+}
+
+.actions li {
+    list-style-type: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+}
+.shopping-cart {
+    width: auto;
+    height: auto;
+}
+
+.shopping-cart:hover {
+background-color: whitesmoke;
+}
+
+.fa-shopping-cart:after{
+    content:attr(value);
+    font-size:12px;
+    color: #fff;
+    background: rgba(0, 38, 255, 0.774);
+    border-radius:50%;
+    padding: 0 5px;
+    position:relative;
+    left:-8px;
+    top:-7px;
+    opacity:0.9;
+}
+
+@media only screen and (max-width: 600px) {
+  .shopping-cart {
+    margin-right: 30px;
+}
+
+}

@@ -1,0 +1,167 @@
+@import url(./Animation.css);
+
+.card-container {
+    width: 100%;
+    min-height: 250vh;
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgba(214, 214, 214, 0.418);
+    z-index: 1;
+    top: 80px;
+}
+
+.cover-overlay {
+    min-height: 10vh;
+    max-height: 70vh;
+    width: 325px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: whitesmoke;
+    position: absolute;
+    margin-right: 130px;
+    top: 0px;
+    border-radius: 0px;
+    z-index: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-box-shadow: 0px 0px 6px 0px #000000; 
+    box-shadow: 0px 0px 6px 0px #000000;
+    -webkit-animation: slide-rotate-hor-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-rotate-hor-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.card {
+    width: 270px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.card-overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+}
+
+.card-description {
+    width: 130px;
+}
+.card-con {
+display: flex;
+flex-direction: row;
+}
+.card-con img {
+    width: 80px;
+    height: 107px;
+    object-fit: cover;
+}
+
+.card-header {
+    padding-top: 20px;
+}
+
+.card-header p {
+    text-transform: capitalize;
+}
+
+
+.plus-btn {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 3px;
+}
+
+
+.plus-btn span {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+}
+
+.card-btn {
+    background-color: white;
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-btn-container {
+    display: flex;
+}
+
+.size-btn {
+    font-size: 10px;
+}
+
+.check-container {
+    width: 100%;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -15px;
+    margin-top: 30px;
+    position: fixed bottom;
+
+}
+
+.check-container button {
+    width: 130px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    margin-top: 10px;
+    text-transform: capitalize;
+    
+}
+
+.green-white {
+   background-color: #5ECE7B; 
+   color: white;
+   margin-left: 10px;
+}
+
+.green-white:hover {
+    background-color: #5ece7ce0; 
+    color: white;
+    margin-left: 10px;
+ }
+
+.transparent {
+    background-color: transparent;
+} 
+
+.transparent:hover {
+    background-color: whitesmoke;
+} 
+.cart-qty {
+    font-weight: 900;
+}
+.fadein {
+    -webkit-animation: slide-bl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
+    animation: slide-bl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
+}
+
+.fadeout {
+    animation: slide-in-fwd-center 0.4s cubic-bezier(0.550, 0.085, 0.680, 0.530) reverse both;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .cover-overlay {
+        margin-right: 0px;
+        margin-right: -16.5px;
+    } 
+  }
