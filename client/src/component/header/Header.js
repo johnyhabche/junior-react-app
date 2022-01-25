@@ -1,81 +1,100 @@
 import { React, Component } from 'react';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { gql } from '@apollo/client';
-import { NavLink } from "react-router-dom";
-import NavbarData from './NavbarData';
+import { NavLink } from 'react-router-dom';
+import { Fetch_CURRENCY_QUERY, Fetch_CATEGORIES_LINKS_QUERY }  from '../../queries/Queries';
 
 import './styles/Header.css';
 import './styles/Actions.css';
 import './styles/Logo.css';
 import './styles/Navigation.css';
 
-const client = new ApolloClient({
-    uri:'http://localhost:4000/graphql',
-    cache: new InMemoryCache()
-  })
-  
-  
-  const currency = client.query({
-    query: gql`
-    {
-      currencies {
-        label
-        symbol
-      }
-      }
-    `
-  })
-
 class Header extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
+          links: [],
           currencies: [],
           selectedOption: "",
+          openCloseCurrency: false,
     
         }
-        this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+
         this.changeQuery = this.changeQuery.bind(this);
       }
+
+      //Get currency and Category Query
       componentDidMount() {
-        currency
-        .then(res => this.setState({currencies: res.data.currencies}))
-    
+        Fetch_CURRENCY_QUERY
+        .then(res => this.setState({currencies: res.data.currencies}));
+
+        Fetch_CATEGORIES_LINKS_QUERY
+        .then(res => this.setState({links: res.data.categories}));
+
       }
+      
       //send category type to app.js 
+      //@param categoryType String
       changeQuery(categoryType) {
-        this.props.onChangeCategory(categoryType)
-        this.props.setProductDetail()
+        const { onChangeCategory,
+                setProductDetail } = this.props;
+        onChangeCategory(categoryType)
+        setProductDetail()
       }
-      //handel currency celected option and send it to app.js
-      handleCurrencyChange(e){
-        this.props.onChangeCurrency(e.target.value)
-        this.setState({selectedOption: e.target.value })
-      }
+
+      //Close and Open card layout
+      //@param boolean
       openCloseCard(bool){
+        const { openClose } = this.props
         this.setState({openClose: !bool})
-        this.props.openClose(!bool)
+        openClose(!bool)
+      }
+
+      //Render Category Navigation
+      renderNavbar() {
+        const { setLink } = this.props
+        return (this.state.links.map((title,index) => (
+          <li key={index}>
+              <NavLink onClick={ () => setLink(title.name)} to={title.name}>{title.name}</NavLink>
+          </li>)
+      ))
+      }
+
+      //generate current currency
+      currencyData() {
+        const { onChangeCurrency } = this.props
+        return (
+          this.state.currencies.map((t,i) => (
+              
+            <li
+              key={i}
+              onClick={ () => onChangeCurrency(t.symbol)}
+              className='currency-option'
+            >{t.symbol} {t.label}</li >
+    
+        ))
+        )
+      }
+
+      handleCurrencyCon(bool) {
+        this.setState({openCloseCurrency: !bool})
       }
       
     render() {
-        const Navbar = NavbarData.map(({title, url},index) => (
-            <li key={index}>
-                <NavLink onClick={ () => this.props.setLink(url)} to={url}>{title}</NavLink>
-            </li>
-        ))
-        const currencyData = this.state.currencies.map((t,i) => (
 
-            <option 
-              key={i}
-              value={t.symbol}
-              className='currency-option'
-            >{t.symbol} {t.label}</option >
-    
-        ))
+      const {
+        currency,
+        productCount,
+      } = this.props
+
+      const {
+        openClose,
+        openCloseCurrency,
+      } = this.state
+      
       return (
         <div className='header'>
             <div className='navigation'>
-                {Navbar}
+                {this.renderNavbar()}
             </div>
 
             <div className='logo'>
@@ -85,15 +104,27 @@ class Header extends Component {
             </div>
 
             <div className='actions'>
-            <select onChange={this.handleCurrencyChange}>
-              {currencyData}
-            </select>
 
-                <li className='shopping-cart' onClick={() => this.openCloseCard(this.state.openClose)}>
+            <button onClick={ () => this.handleCurrencyCon(openCloseCurrency)} className='currency-switcher-btn'>
+              {currency}
+              <span>{ openCloseCurrency === true ? <i className="fas fa-arrow-down"></i> :  <i className="fas fa-arrow-up"></i> }</span>
+            </button>
 
-                  <i value={this.props.productCount} className="fas fa-shopping-cart"></i>
+            <div className="currency-container">
+              {
+                openCloseCurrency === true ? 
+
+                <div className='currency-switcher'>
+                  {this.currencyData()}
+                </div> : ""
+              }
+            </div>
+
+                <div className='shopping-cart' onClick={() => this.openCloseCard(openClose)}>
+
+                  <i value={productCount} className="fas fa-shopping-cart"></i>
                   
-                </li>
+                </div>
             </div>
 
         </div>

@@ -1,49 +1,10 @@
 import { React, PureComponent  } from 'react';
-import { gql } from '@apollo/client';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { Fetch_PRODUCTS_QUERY } from '../../queries/Queries'
 
 import './styles/Content.css';
 import { NavLink } from 'react-router-dom';
 // import PDP from '../pdp/PDP';
 
-const client = new ApolloClient({
-  uri:'http://localhost:4000/graphql',
-  cache: new InMemoryCache()
-})
-
-
-const categories = client.query({
-  query: gql`
-  {
-    category {
-      name
-      products {
-        id
-        name
-        inStock
-        brand
-        description
-        gallery
-        category
-        attributes {
-          name
-          items {
-            displayValue
-          }
-        }
-        prices {
-          amount
-          currency {
-            label
-            symbol
-          }
-        }
-      }
-  
-    }
-  }
-  `
-})
 class Content extends PureComponent {
       constructor(props) {
         super(props);
@@ -51,60 +12,75 @@ class Content extends PureComponent {
           product: [],
         }
       }
+
       componentDidMount() {
-        categories
+        Fetch_PRODUCTS_QUERY
         .then(res => this.setState({product: res.data.category.products}))
 
       } 
+      //Render Products detail by category type
+      renderProducts() {
+
+        const { cat,
+                productDetail,
+                currency} = this.props;
+
+        const { product } = this.state;
+
+        return (
+
+          product.map((t,i) => (
+           
+            cat === t.category ?
+                <NavLink className='product-link' key={i} to={t.id} onClick={ () => productDetail(t)} >
+                  <div key={i} className={t.inStock ? 'product' : 'product-not-instock'}>
+                    <div className={t.inStock ? '' : 'overlay'}></div>
+    
+                    <img alt={t.id} src={t.gallery[0]} />
+                    <p className='product-title'>{t.name}</p>
+                    <div className='price-currency-con'>
+                      <p className='product-price'>{t.prices.map((cur, index) => (
+                        currency === cur.currency.symbol ? cur.currency.symbol : ""
+                      ))}</p>
+                      <p className='product-price'>{t.prices.map((cur, index) => (
+                        currency === cur.currency.symbol ? cur.amount : ""
+                      ))}</p>
+                    </div>
+                  </div>
+                </NavLink>
+            : cat === "all" ?
+                <NavLink className='product-link' key={i} to={t.id} onClick={ () => productDetail(t)}>
+                    <div key={i} className={t.inStock ? 'product' : 'product-not-instock'}>
+                    <div className={t.inStock ? '' : 'overlay'}></div>
+                    <img alt={t.id} src={t.gallery[0]} />
+                    <p className='product-title'>{t.name}</p>
+                    <div className='price-currency-con'>
+                    <p className='product-price'>{t.prices.map((cur, index) => (
+                        currency === cur.currency.symbol ? cur.currency.symbol : ""
+                      ))}</p>
+                      <p className='product-price'>{t.prices.map((cur, index) => (
+                        currency === cur.currency.symbol ? cur.amount : ""
+                      ))}</p>
+                    </div>
+                  </div>
+                </NavLink>
+                      : ""
+                    
+            ))
+        )
+      }
       
     render() {
 
-        const product = this.state.product.map((t,i) => (
-           
-                this.props.cat === t.category ?
-            <div key={i} onClick={ () => this.props.productDetail(t)}  className={t.inStock ? 'product' : 'product-not-instock'}>
-                          <NavLink key={i} to={t.id}>
-              <div className={t.inStock ? '' : 'overlay'}></div>
+      const { cat, } = this.props
 
-              <img alt={t.id} src={t.gallery[0]} />
-              <p className='product-title'>{t.name}</p>
-              <div className='price-currency-con'>
-                <p className='product-price'>{t.prices.map((cur, index) => (
-                  this.props.currency === cur.currency.symbol ? cur.currency.symbol : ""
-                ))}</p>
-                <p className='product-price'>{t.prices.map((cur, index) => (
-                  this.props.currency === cur.currency.symbol ? cur.amount : ""
-                ))}</p>
-              </div>
-              </NavLink>
-            </div>
-               : this.props.cat === "all" ?
-              
-               <div key={i} onClick={ () => this.props.productDetail(t)} className={t.inStock ? 'product' : 'product-not-instock'}>
-                  <NavLink key={i} to={t.id}>
-               <div className={t.inStock ? '' : 'overlay'}></div>
-               <img alt={t.id} src={t.gallery[0]} />
-               <p className='product-title'>{t.name}</p>
-               <div className='price-currency-con'>
-               <p className='product-price'>{t.prices.map((cur, index) => (
-                  this.props.currency === cur.currency.symbol ? cur.currency.symbol : ""
-                ))}</p>
-                <p className='product-price'>{t.prices.map((cur, index) => (
-                  this.props.currency === cur.currency.symbol ? cur.amount : ""
-                ))}</p>
-               </div>
-               </NavLink>
-             </div>
-                : ""
-                
-        ))
       return (
         <div className='content'>
           <div className='title-container'>
-            <h1>{this.props.cat}</h1>
+            <h1>{cat}</h1>
           </div>
             <div className='product-container'>
-                {product}
+                {this.renderProducts()}
             </div>
         </div>
       ) 

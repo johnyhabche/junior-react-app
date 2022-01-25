@@ -8,73 +8,120 @@ class CardOverlay extends Component {
     super(props);
     this.state = {
       cardOption: false,
-      addedProducts: []
+      addedProducts: [],
     }
   }
-  handleQuantity(index , opperator){
+  handleQuantity(index , opperator, price){
 
-    var mainArray=this.props.toCart;
+    const { toCart, setTotal } = this.props;
+    var mainArray = toCart;
+    // var totalArray = total;
+
     if(opperator === "increment") {
       mainArray[index].qty += 1;
+      // totalArray.push(price);
+      // this.setState({total: totalArray})
+
     }
     if(opperator === "decrement") {
-      if(mainArray[index].qty >= 1)
-      mainArray[index].qty -= 1;
+      
+      if(mainArray[index].qty > 1) {
+          mainArray[index].qty -= 1;
+
+      }
+
     }
     else mainArray[index].qty -= 0;
-
+    let finalTotal = 0;
+    toCart.map((product,i) => {
+      finalTotal += product.prices[0].amount * product.qty;
+      setTotal(Math.round(finalTotal * 100) / 100);
+      return("");
+    })
     this.setState({addedProducts: mainArray});
-  }
+    }
+    
+  //calculate card items Total Price  
+  // calcTotal(cart) {
+  //   const { total } = this.props;
+  //   console.log(cart)
+    // cart.map((product, index) => {
+    //   console.log(product)
+    // })
+    // let finalTotal;
+    // finalTotal = total.reduce((res, i) => Math.round((res +  i) * 100) / 100 ) 
+    // return(
+    //   finalTotal
+    // )
+  // }
 
-    render() {
-
-        const items =
-        this.props.toCart !== "" ?
-          this.props.toCart.map((item, index) => (
+  //render cardOverlay Items
+  renderItems() {
+    const { toCart,
+            currency } = this.props;
+            
+    return (
+      toCart.length !== 0 ?
+        toCart.map((item, index) => (
+          
             <div key={index} className='card'>
               <div>
                   <p>{item.name}</p>
                   <p>{item.brand}</p>
-                  <p><span>{this.props.currency} </span>{item.prices.map((cur, r) => (
-                    this.props.currency === cur.currency.symbol ? (Math.round((cur.amount * item.qty) * 100) / 100) : ""
+                  <p><span>{currency} </span>{item.prices.map((cur, r) => (
+                    currency === cur.currency.symbol ? (Math.round((cur.amount) * 100) / 100) : ""
                   ))}</p>
                   <div className='size-btn-container'>
-                      <button className='card-btn size-btn'>S</button>
-                      <button className='card-btn size-btn'>M</button>
+                      {item.size === "" ? "" : isNaN(item.size) && item.size != null ? <button className="card-btn size-btn"> {item.size.charAt(0)}</button> : item.size !== "" ? <button className="card-btn size-btn"> {item.size}</button> : "" }
+                      {item.color === "" ? "" : item.color !== "" ? <button className={`card-btn size-btn ${item.color}`}></button> : "" }
+                      {item.capacity === "" ? "" : item.capacity !== "" ? <button className="card-btn size-btn"> {item.capacity}</button> : "" }
                   </div>
               </div>
-              <div className='card-con'>
-              <div className='plus-btn'>
-                  <button  className='card-btn' onClick={()=>this.handleQuantity(index, "increment")} >+</button>
-                  <span>{item.qty }</span>
-                  <button className='card-btn' onClick={()=>this.handleQuantity(index, "decrement")}>-</button>
-              </div>
-                  <img alt='' src={item.gallery[0]} />
-              </div>
+                  <div className='card-con'>
+                  <div className='plus-btn'>
+                      <button  className='card-btn' onClick={ () => this.handleQuantity(index, "increment", item.prices[0].amount, item.qty)} >+</button>
+                      <span>{ item.qty }</span>
+                      <button className='card-btn' onClick={ () => this.handleQuantity(index, "decrement", item.price)}>-</button>
+                  </div>
+                      <img alt='' src={item.gallery[0]} />
+                  </div>
         </div>
-          
-        ))
-        : "Card empty"
+      
+    ))
+      : <div className='empty-card'><p> Nothing here yet ! </p></div>
+    )
+  }
+
+    render() {
+
+      const { closeCard,
+              toCart,
+              total
+            } = this.props;
+
       return (
           <div className='card-container'>
-            <div onClick={() => this.props.closeCard(false)} className='card-overlay'>
+            <div onClick={() => closeCard(false)} className='card-overlay'>
 
             </div>
 
             <div className='fadein cover-overlay'>
                 <div className='card-header'>
-                    <p>My Bag. <span className='cart-qty'>{this.props.toCart.length}</span> items</p>
+                    <p>My Bag. <span className='cart-qty'>{toCart.length} items</span></p>
                 </div>
-
-                {items}
-
-                <div className='check-container'>
+                <div className='items-container'>
+                  {this.renderItems()}
+                </div>
+                <div className='card-footer'>
+                  <div className='total-container'>
+                    <p>total :</p>
+                    <span>${total}</span>
+                  </div>
+                  <div className='check-container'>
                       <NavLink to="cart"><button className='transparent'>view bag</button></NavLink>
                       <button className='green-white'>check out</button>
+                  </div>
                 </div>
-             </div>
-             <div>
-               <p>Total</p>
              </div>
           </div>
       ) 

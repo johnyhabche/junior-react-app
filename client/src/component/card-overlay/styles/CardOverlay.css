@@ -2,7 +2,7 @@
 
 .card-container {
     width: 100%;
-    min-height: 250vh;
+    min-height: 100vh;
     position: fixed;
     display: flex;
     justify-content: flex-end;
@@ -13,27 +13,32 @@
 
 .cover-overlay {
     min-height: 10vh;
-    max-height: 70vh;
-    width: 325px;
+    max-height: 80vh;
+    width: 355px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: whitesmoke;
+    background-color: white;
+    overflow-y: hidden;
+    overflow-x: hidden;
     position: absolute;
-    margin-right: 130px;
+    margin-right: 80px;
+    margin-top: -10px;
     top: 0px;
     border-radius: 0px;
-    z-index: 1;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -webkit-box-shadow: 0px 0px 6px 0px #000000; 
-    box-shadow: 0px 0px 6px 0px #000000;
-    -webkit-animation: slide-rotate-hor-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     animation: slide-rotate-hor-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.items-container {
+    min-height: 10vh;
+    max-height: 70vh;
+    overflow-y: scroll;
+    margin-left: 63px;
+    padding-right: 40px;
+}
+
 .card {
-    width: 270px;
+    width: 300px;
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
@@ -51,30 +56,40 @@
     width: 130px;
 }
 .card-con {
-display: flex;
-flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 .card-con img {
-    width: 80px;
-    height: 107px;
-    object-fit: cover;
+    width: 110px;
+    height: 127px;
 }
 
 .card-header {
     padding-top: 20px;
+    padding-right: 177px;
 }
 
 .card-header p {
     text-transform: capitalize;
+    font-weight: 900;
 }
 
+.card-header span {
+    text-transform: capitalize;
+    font-weight: 600;
+}
 
 .plus-btn {
     display: flex;
     align-content: center;
     justify-content: space-between;
     flex-direction: column;
+    width: 30px;
     margin: 3px;
+}
+
+.plus-btn button {
+    border: 1px solid black;
 }
 
 
@@ -82,14 +97,16 @@ flex-direction: row;
     display: flex;
     align-content: center;
     justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    padding-right: 3px;
 
 }
 
 .card-btn {
-    background-color: white;
     border: 1px solid black;
-    width: 20px;
-    height: 20px;
+    min-width: 25px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,7 +117,37 @@ flex-direction: row;
 }
 
 .size-btn {
-    font-size: 10px;
+    font-size: 15px;
+    margin: 5px;
+}
+
+.card-footer {
+    width: 100%;
+    min-height: 15vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.total-container {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.total-container p {
+    font-weight: 900;
+    font-family: Roboto;
+    text-transform: capitalize;
+}
+.total-container span {
+    font-weight: 700;
+    text-transform: capitalize;
+    padding-right: 20px;
 }
 
 .check-container {
@@ -109,9 +156,6 @@ flex-direction: row;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: -15px;
-    margin-top: 30px;
-    position: fixed bottom;
 
 }
 
@@ -122,9 +166,8 @@ flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    border: 1px solid black;
-    margin-top: 10px;
     text-transform: capitalize;
+    margin-right: 11px ;
     
 }
 
@@ -132,6 +175,7 @@ flex-direction: row;
    background-color: #5ECE7B; 
    color: white;
    margin-left: 10px;
+   border: none;
 }
 
 .green-white:hover {
@@ -142,6 +186,8 @@ flex-direction: row;
 
 .transparent {
     background-color: transparent;
+    margin-left: -10px;
+    border: 1px solid black;
 } 
 
 .transparent:hover {
@@ -153,6 +199,20 @@ flex-direction: row;
 .fadein {
     -webkit-animation: slide-bl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
     animation: slide-bl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
+}
+
+.empty-card {
+    min-width: 300px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-card p{
+    font-weight: 500;
+    font-size: 18px;
+    text-transform: capitalize;
 }
 
 .fadeout {

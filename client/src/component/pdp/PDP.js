@@ -4,79 +4,158 @@ import './styles/PDP.css';
 
 
 class PDP extends PureComponent {
+    constructor(props) {
+      super(props);
+      this.state = {
+        gallery: [],
+        topImg: "",
+        pickedColor: false,
+      }
+      
+    }
+
+    componentDidMount() {
+     this.setState({product: this.props.productDetails})
+     this.setState({gallery: this.props.productDetails.gallery});
+     this.setState({topImg: this.props.productDetails.gallery[0]})
+    }
+
+    //set picked product image to primary picture
+    handleImagePick(imageLink) {
+      this.setState({topImg: imageLink})
+      
+    }
     
+    //render product gallery
+    renderGallery() {
+      const { gallery } = this.state;
+      return ( gallery.map((item, index) => (
+
+        <img className='top-img' onClick={ () => this.handleImagePick(item)} alt="" key={index} src={item} />
+      )  
+    ))
+    }
+
+    renderAtrributes() {
+
+      const {
+        handleAttributCapacity,
+        handleAttributColor,
+        handleAttributSize,
+        handleAttributWithUSB,
+        productDetails,
+        pickedColor,
+        pickedCapacity,
+        pickedSize,
+        pickedWithUsb,
+        handleAttributWithTouchID,
+        pickedWithTouchID
+      } = this.props
+
+      return (
+        productDetails.attributes.map((attr, index) => (
+              <div key={index}>
+              <h6>{attr.name + ":"}</h6>
+              <div className='attributes-container'>
+                  
+                    <div  className='attributes-list'>
+                    {attr.items.map((items, i) => (
+                        
+                        attr.name === "Color" ?
+              
+                        <div className='attr-container' key={i}>
+                          <li key={i} onClick={ () => handleAttributColor(items.displayValue, i)} className={`${items.displayValue} attributess`} >
+
+                          </li>
+                          {pickedColor.id === i && pickedColor.color === items.displayValue ?<p className='picked-attr'>{items.displayValue}</p> : ""}
+                        </div>
+                        : 
+                        attr.name === "Size" ? 
+                        <div className='attr-container' key={i}>
+                          <li key={i} onClick={ () => handleAttributSize(items.displayValue, i)} className="attributes" >
+                          {items.displayValue}
+                          </li>
+                          {pickedSize.id === i && pickedSize.size === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
+                        </div> 
+                        : 
+                        attr.name === "Capacity" ? 
+                        <div className='attr-container' key={i}> 
+                          <li key={i}  onClick={ () => handleAttributCapacity(items.displayValue, i)} className="attributes" >
+                          {items.displayValue}
+                          </li>
+                          {pickedCapacity.id === i && pickedCapacity.capacity === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
+                        </div>
+                        :
+                        attr.name === "With USB 3 ports" ? 
+                        <div className='attr-container' key={i}>
+                          <li key={i} className="attributes" onClick={ () => handleAttributWithUSB(items.displayValue, i) } >
+                          {items.displayValue}
+                          </li>
+                          {pickedWithUsb.id === i && pickedWithUsb.usb === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
+                        </div>
+                        : 
+                        attr.name === "Touch ID in keyboard" ? 
+                        <div className='attr-container' key={i}>
+                          <li key={i} className="attributes" onClick={ () => handleAttributWithTouchID(items.displayValue, i) } >
+                          {items.displayValue}
+                          </li>
+                          {pickedWithTouchID.id === i && pickedWithTouchID.withTouchID === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
+                        </div>
+                        : ""
+
+                      ))}
+                    </div>
+              </div>
+            </div>
+              
+          ))
+      )
+    }
+
     render() {
-        var item = this.props.productDetails;
-        const gallery = this.props.productDetails.gallery.map((index,item) => (
-            <img alt={index} key={index} src={this.props.productDetails.gallery[item]} />
-        ))
+
+      const { 
+        currency,
+        notAvailable,
+        productDetails,
+        selectedProduct} = this.props 
+
+      const { topImg } = this.state 
 
       return (
         <div className='pdp-container'>
             <div className='product-gallery'>
-            {gallery}
+
+            {this.renderGallery()}
+
             </div>
             <div className='product-image'>
-                <img alt='' src={this.props.productDetails.gallery[0]} />
+                <img alt='' src={topImg} />
             </div>
             <div className='card-information'>
-                <h1>{this.props.productDetails.name}</h1>
-                <h2>{this.props.productDetails.brand}</h2>
+                <h1>{productDetails.name}</h1>
+                <h2>{productDetails.brand}</h2>
 
                 <div className='sizes-container'>
-                    {
-                        this.props.productDetails.attributes.map((attr, index) => (
-                            <div key={index}>
-                            <h6>{attr.name + ":"}</h6>
-                            <div className='attributes-container'>
-                                
-                                {attr.items.map((items, i) => (
-                                  <div key={i} className='col-container'>
-                                    {
-                                      attr.name === "Color" ?
-                                      <button className={`${items.displayValue} btn-attributes focus-white`} >
-                                        
-                                      </button> 
-                                      : attr.name === "Size" ? 
-                                      <button className="btn-attributes focus-white" >
-                                      {items.displayValue}
-                                      </button> 
-                                      : attr.name === "Capacity" ? 
-                                      <button className="btn-attributes focus-white " >
-                                      {items.displayValue}
-                                      </button>
-                                      : 
-                                      attr.name === "With USB 3 ports" ? 
-                                      <button className="btn-attributes focus-white " >
-                                      {items.displayValue}
-                                      </button>
-                                      : 
-                                      attr.name === "Touch ID in keyboard" ? 
-                                      <button className="btn-attributes focus-white " >
-                                      {items.displayValue}
-                                      </button>
-                                      : ""
-                                    }
 
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                            
-                        ))
-                    }
+                {this.renderAtrributes()}
+                
                 </div>
 
-                <h6> {this.props.currency} {this.props.productDetails.prices.map((cur, index) => (
-                  this.props.currency === cur.currency.symbol ? cur.amount : ""
-                ))}</h6>
+                <h6> {currency} {productDetails.prices.map((cur, index) => (
+                  currency === cur.currency.symbol ? cur.amount : ""
+                ))}
+                </h6>
                 <div className='add-to-card-container'>
-                    <button onClick={ () => this.props.selectedProduct(this.props.productDetails)} className={ this.props.productDetails.inStock === true ? "add-to-card" : "disabled-btn"}>
+                    <button onClick={ () => selectedProduct(productDetails)} className={ productDetails.inStock === true ? "add-to-card" : "disabled-btn" }>
                         add to cart
                     </button>
+                    <div className='not-avai;able-item'>
+                      {notAvailable === true ? <h6> item not available! </h6> : "" }
+                    </div>
                 </div>
-                <p>
-                {(this.props.productDetails.description).replace(/<[^>]+>/g, '')}
+                <p className='product-des'>
+                {(productDetails.description).replace(/<[^>]+>/g, '')}
                 </p>
             </div>
         </div>
