@@ -30,7 +30,7 @@ class Cart extends Component {
   renderCart() {
     const { selectedProduct,
             currency,
-            Ondelete } = this.props;
+            onDelete } = this.props;
 
     return (
       selectedProduct.map((products, index) => (
@@ -63,12 +63,12 @@ class Cart extends Component {
           </div>
         <div className='cart-imgs'>
           <div className='cart-counters'>
-            <button className='btn-hover' onClick={()=>this.handleQuantity(index, "increment")}>+</button>
+            <button className='btn-hover' onClick={()=> this.handleQuantity(index, "increment")}>+</button>
             <p> {products.qty}</p>
-            <button className='btn-hover' onClick={()=>this.handleQuantity(index, "decrement")}>-</button>
+            <button className='btn-hover' onClick={()=> this.handleQuantity(index, "decrement")}>-</button>
           </div>
           <img alt='' src={products.gallery[0]}></img>
-            <button className='remove-item' onClick={()=> Ondelete(index)}>-</button> 
+            <button className='remove-item' onClick={()=> onDelete(index)}>-</button> 
         </div>
   </div>
       ))

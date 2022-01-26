@@ -40,20 +40,6 @@ class CardOverlay extends Component {
     })
     this.setState({addedProducts: mainArray});
     }
-    
-  //calculate card items Total Price  
-  // calcTotal(cart) {
-  //   const { total } = this.props;
-  //   console.log(cart)
-    // cart.map((product, index) => {
-    //   console.log(product)
-    // })
-    // let finalTotal;
-    // finalTotal = total.reduce((res, i) => Math.round((res +  i) * 100) / 100 ) 
-    // return(
-    //   finalTotal
-    // )
-  // }
 
   //render cardOverlay Items
   renderItems() {

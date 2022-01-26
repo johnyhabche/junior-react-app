@@ -72,34 +72,30 @@ class PDP extends PureComponent {
                         : 
                         attr.name === "Size" ? 
                         <div className='attr-container' key={i}>
-                          <li key={i} onClick={ () => handleAttributSize(items.displayValue, i)} className="attributes" >
-                          {items.displayValue}
+                          <li key={i} onClick={ () => handleAttributSize(items.displayValue, i)} className={`atributes ${pickedSize.id === i && pickedSize.size === items.displayValue ? "black-bg" : ""}`} >
+                          {!isNaN(items.displayValue) ? items.displayValue : items.displayValue.charAt(0)}
                           </li>
-                          {pickedSize.id === i && pickedSize.size === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
                         </div> 
                         : 
                         attr.name === "Capacity" ? 
                         <div className='attr-container' key={i}> 
-                          <li key={i}  onClick={ () => handleAttributCapacity(items.displayValue, i)} className="attributes" >
+                          <li key={i}  onClick={ () => handleAttributCapacity(items.displayValue, i)} className={`atributes ${pickedCapacity.id === i && pickedCapacity.capacity === items.displayValue ? "black-bg" : ""}`} >
                           {items.displayValue}
                           </li>
-                          {pickedCapacity.id === i && pickedCapacity.capacity === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
                         </div>
                         :
                         attr.name === "With USB 3 ports" ? 
                         <div className='attr-container' key={i}>
-                          <li key={i} className="attributes" onClick={ () => handleAttributWithUSB(items.displayValue, i) } >
+                          <li key={i} onClick={ () => handleAttributWithUSB(items.displayValue, i) } className={`atributes ${pickedWithUsb.id === i && pickedWithUsb.usb === items.displayValue ? "black-bg" : ""}`}>
                           {items.displayValue}
                           </li>
-                          {pickedWithUsb.id === i && pickedWithUsb.usb === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
                         </div>
                         : 
                         attr.name === "Touch ID in keyboard" ? 
                         <div className='attr-container' key={i}>
-                          <li key={i} className="attributes" onClick={ () => handleAttributWithTouchID(items.displayValue, i) } >
+                          <li key={i} onClick={ () => handleAttributWithTouchID(items.displayValue, i)} className={`atributes ${pickedWithTouchID.id === i && pickedWithTouchID.withTouchID === items.displayValue ? "black-bg" : ""}`}>
                           {items.displayValue}
                           </li>
-                          {pickedWithTouchID.id === i && pickedWithTouchID.withTouchID === items.displayValue ?<p className='picked-attr dashed'>_</p> : ""}
                         </div>
                         : ""
 

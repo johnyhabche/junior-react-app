@@ -139,6 +139,10 @@
     font-size: 30px;
     font-weight: 900;
 }
+.black-bg {
+    background-color: black;
+    color: white;
+}
 
 @media only screen and (max-width: 600px) {
     .pdp-container {
