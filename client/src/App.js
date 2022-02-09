@@ -17,9 +17,10 @@ class App extends PureComponent {
       pickedCapacity: [{id: "", capacity: ""}],
       pickedSize: [{id: "", size: ""}],
       pickedWithUsb: [{id: "", usb: ""}],
-      pickedWithTouchID: [{id: "", touchID: ""}],
+      pickedWithTouchID: [{id: "", withTouchID: ""}],
       currentCurrency: "$",
       productCategory: "all",
+      openCloseCurrency: false,
       productDetail: [],
       openClose: false,
       notAvailable: false,
@@ -43,10 +44,16 @@ class App extends PureComponent {
     this.handleAttributWithUSB = this.handleAttributWithUSB.bind(this);
     this.handleAttributWithTouchID = this.handleAttributWithTouchID.bind(this);
     this.setTotal = this.setTotal.bind(this);
+    this.handleCurrencyCon = this.handleCurrencyCon.bind(this);
+  }
+
+  handleCurrencyCon(bool) {
+    this.setState({openCloseCurrency: !bool})
   }
 
   changeCurrency(curr) {
     this.setState({currentCurrency: curr})
+    this.setState({openCloseCurrency: false})
   }
 
   setLink(link) {
@@ -100,7 +107,8 @@ class App extends PureComponent {
             size: pickedSize.size,
             capacity: pickedCapacity.capacity,
             usb: pickedWithUsb.usb,
-            touchID: pickedWithTouchID.touchID
+            touchID: pickedWithTouchID.withTouchID,
+            curImage: 0
       };
         return {
           nextProductId: prevState.nextProductId + 1,
@@ -169,13 +177,16 @@ class App extends PureComponent {
             pickedSize,
             pickedWithTouchID,
             pickedWithUsb,
-            total
+            total,
+            openCloseCurrency
           } = this.state;
     
     return (
       <div className="App"> 
               <Router className="router">
               <Header
+                handleCurrencyCon = {this.handleCurrencyCon}
+                openCloseCurrency = {openCloseCurrency}
                 onChangeCurrency = {this.changeCurrency}
                 setLink = {this.setLink}
                 openClose = {this.openCloseCard}
@@ -188,6 +199,7 @@ class App extends PureComponent {
                 currency = {currentCurrency}
                 total = {total}
                 setTotal = {this.setTotal}
+                onDelete = {this.onDelete}
                   /> : ''}
                 <Routes>
                   <Route path="/" exact={true}

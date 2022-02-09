@@ -2,9 +2,9 @@
     width: 100%;
     min-height: 100vh;
     display: flex;
-    padding: 120px;
-    padding-left: 200px;
-    padding-top: 200px;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .product-gallery {
@@ -84,10 +84,6 @@
 
 .product-des {
     min-height: 0vh;
-    max-height: 20vh;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: visible;
 }
 
 .top-img {

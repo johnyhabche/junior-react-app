@@ -15,7 +15,6 @@ class Header extends Component {
           links: [],
           currencies: [],
           selectedOption: "",
-          openCloseCurrency: false,
     
         }
 
@@ -75,20 +74,21 @@ class Header extends Component {
         )
       }
 
-      handleCurrencyCon(bool) {
-        this.setState({openCloseCurrency: !bool})
-      }
+      // handleCurrencyCon(bool) {
+      //   this.setState({openCloseCurrency: !bool})
+      // }
       
     render() {
 
       const {
         currency,
         productCount,
+        handleCurrencyCon,
+        openCloseCurrency
       } = this.props
 
       const {
         openClose,
-        openCloseCurrency,
       } = this.state
       
       return (
@@ -105,7 +105,7 @@ class Header extends Component {
 
             <div className='actions'>
 
-            <button onClick={ () => this.handleCurrencyCon(openCloseCurrency)} className='currency-switcher-btn'>
+            <button onClick={ () => handleCurrencyCon(openCloseCurrency)} className='currency-switcher-btn'>
               {currency}
               <span>{ openCloseCurrency === true ? <i className="fas fa-arrow-down"></i> :  <i className="fas fa-arrow-up"></i> }</span>
             </button>

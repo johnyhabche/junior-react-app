@@ -114,11 +114,22 @@
 
 .size-btn-container {
     display: flex;
+    flex-direction: column;
+    max-width: 200px;
+}
+
+.attr-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.red {
+    background-color: red;
 }
 
 .size-btn {
     font-size: 15px;
     margin: 5px;
+    padding: 2px;
 }
 
 .card-footer {
@@ -213,6 +224,10 @@
     font-weight: 500;
     font-size: 18px;
     text-transform: capitalize;
+}
+
+.selected {
+    background-color: rgba(48, 48, 48, 0.274);
 }
 
 .fadeout {

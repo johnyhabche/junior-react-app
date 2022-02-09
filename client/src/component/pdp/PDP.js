@@ -2,7 +2,7 @@ import { React, PureComponent  } from 'react';
 
 import './styles/PDP.css';
 
-
+const parse = require('html-react-parser');
 class PDP extends PureComponent {
     constructor(props) {
       super(props);
@@ -151,7 +151,7 @@ class PDP extends PureComponent {
                     </div>
                 </div>
                 <p className='product-des'>
-                {(productDetails.description).replace(/<[^>]+>/g, '')}
+                {parse(productDetails.description)}
                 </p>
             </div>
         </div>

@@ -18,6 +18,9 @@ class Content extends PureComponent {
         .then(res => this.setState({product: res.data.category.products}))
 
       } 
+      handelCardBtn() {
+        console.log("hello world")
+      }
       //Render Products detail by category type
       renderProducts() {
 
@@ -32,11 +35,15 @@ class Content extends PureComponent {
           product.map((t,i) => (
            
             cat === t.category ?
+
+            <div key={i} className='products'>
+                <div className='cart-btn-container'>
+                {t.inStock ? <button className='cart-button'>S</button> : ""}
+                </div>
                 <NavLink className='product-link' key={i} to={t.id} onClick={ () => productDetail(t)} >
                   <div key={i} className={t.inStock ? 'product' : 'product-not-instock'}>
                     <div className={t.inStock ? '' : 'overlay'}></div>
-    
-                    <img alt={t.id} src={t.gallery[0]} />
+                    <img className='product-img' alt={t.id} src={t.gallery[0]} />
                     <p className='product-title'>{t.name}</p>
                     <div className='price-currency-con'>
                       <p className='product-price'>{t.prices.map((cur, index) => (
@@ -48,11 +55,18 @@ class Content extends PureComponent {
                     </div>
                   </div>
                 </NavLink>
+            </div>
+
             : cat === "all" ?
+
+            <div key={i} className='products'>
+                <div className='cart-btn-container'>
+                {t.inStock ? <button className='cart-button'>S</button> : ""}
+                </div>
                 <NavLink className='product-link' key={i} to={t.id} onClick={ () => productDetail(t)}>
                     <div key={i} className={t.inStock ? 'product' : 'product-not-instock'}>
                     <div className={t.inStock ? '' : 'overlay'}></div>
-                    <img alt={t.id} src={t.gallery[0]} />
+                    <img className='product-img' alt={t.id} src={t.gallery[0]} />
                     <p className='product-title'>{t.name}</p>
                     <div className='price-currency-con'>
                     <p className='product-price'>{t.prices.map((cur, index) => (
@@ -64,6 +78,8 @@ class Content extends PureComponent {
                     </div>
                   </div>
                 </NavLink>
+               </div>
+
                       : ""
                     
             ))
