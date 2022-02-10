@@ -1,0 +1,93 @@
+.modal-overlay  {
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgba(109, 109, 109, 0.384);
+    overflow: hidden !important;
+    position: absolute;
+    z-index: 100;
+    top: 80px;
+    position: fixed;
+}
+
+.modal-con {
+    width: 550px;
+    min-height: 250px;
+    background-color: whitesmoke;
+    z-index: 201;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 100%;
+    min-height: 20px;
+    flex-direction: column;
+}
+.attributes {
+    display: flex;
+}
+.modal-body li {
+    list-style-type: none;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.picked-attr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.dashed {
+    margin-top: -40px;
+    font-size: 30px;
+    font-weight: 900;
+}
+.black-bg {
+    background-color: black;
+    color: white;
+}
+
+.modal-footer button {
+    width: 100%;
+    height: 50px;
+    background-color: #5ECE7B;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+}
+
+.modal-footer button:hover {
+    background-color: #5ece7cea;
+    
+}
+
+.attributes h6 {
+    width: 100px;
+}
+
+.close-btn {
+    position: absolute;
+    left: 520px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: rgba(0, 0, 0, 0.253);
+}

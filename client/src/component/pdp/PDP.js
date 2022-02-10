@@ -3,6 +3,7 @@ import { React, PureComponent  } from 'react';
 import './styles/PDP.css';
 
 const parse = require('html-react-parser');
+
 class PDP extends PureComponent {
     constructor(props) {
       super(props);
@@ -15,9 +16,10 @@ class PDP extends PureComponent {
     }
 
     componentDidMount() {
-     this.setState({product: this.props.productDetails})
-     this.setState({gallery: this.props.productDetails.gallery});
-     this.setState({topImg: this.props.productDetails.gallery[0]})
+    const { productDetails } = this.props;
+    this.setState({product: productDetails})
+    this.setState({gallery: productDetails.gallery});
+    this.setState({topImg: productDetails.gallery[0]})
     }
 
     //set picked product image to primary picture
@@ -58,7 +60,7 @@ class PDP extends PureComponent {
               <h6>{attr.name + ":"}</h6>
               <div className='attributes-container'>
                   
-                    <div  className='attributes-list'>
+                  <div  className='attributes-list'>
                     {attr.items.map((items, i) => (
                         
                         attr.name === "Color" ?
@@ -114,7 +116,8 @@ class PDP extends PureComponent {
         currency,
         notAvailable,
         productDetails,
-        selectedProduct} = this.props 
+        selectedProduct,
+        addAllOptions} = this.props 
 
       const { topImg } = this.state 
 
@@ -146,6 +149,9 @@ class PDP extends PureComponent {
                     <button onClick={ () => selectedProduct(productDetails)} className={ productDetails.inStock === true ? "add-to-card" : "disabled-btn" }>
                         add to cart
                     </button>
+                    <div className='options-warning'>
+                      {addAllOptions ? <h3>please provide all options!</h3> : ""}
+                    </div>
                     <div className='not-avai;able-item'>
                       {notAvailable === true ? <h6> item not available! </h6> : "" }
                     </div>

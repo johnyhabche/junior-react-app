@@ -19,38 +19,42 @@ const Fetch_CURRENCY_QUERY = client.query({
 })
 
 
-const Fetch_PRODUCTS_QUERY  = client.query({
-    query: gql`
-    {
-      category {
-        name
-        products {
-          id
+const Fetch_CATEGORIES_QUERY  = (cat) => {
+  return (
+    client.query({
+      query: gql`
+      {
+        category(input: { title: "${cat}"}) {
           name
-          inStock
-          brand
-          description
-          gallery
-          category
-          attributes {
+          products {
+            id
             name
-            items {
-              displayValue
+            inStock
+            brand
+            description
+            gallery
+            category
+            attributes {
+              name
+              items {
+                displayValue
+              }
+            }
+            prices {
+              amount
+              currency {
+                label
+                symbol
+              }
             }
           }
-          prices {
-            amount
-            currency {
-              label
-              symbol
-            }
-          }
+      
         }
-    
       }
-    }
-    `
-  })
+      `
+    })
+)
+}
 
 const Fetch_CATEGORIES_LINKS_QUERY  = client.query({
     query: gql`
@@ -63,4 +67,4 @@ const Fetch_CATEGORIES_LINKS_QUERY  = client.query({
   })
 
       
-export { Fetch_CURRENCY_QUERY, Fetch_PRODUCTS_QUERY, Fetch_CATEGORIES_LINKS_QUERY};
+export { Fetch_CURRENCY_QUERY, Fetch_CATEGORIES_QUERY, Fetch_CATEGORIES_LINKS_QUERY };

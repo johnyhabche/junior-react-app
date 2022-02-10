@@ -56,3 +56,10 @@ button {
 .white {
   background-color: white;
 }
+
+.options-warning {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+}

@@ -60,7 +60,7 @@ class Cart extends Component {
       productArray[index].curImage -= 1
   }
     else productArray[index].curImage = 0;
-    console.log(productArray[index].curImage)
+    
     this.setState({cart: productArray})
   }
   
@@ -93,6 +93,8 @@ class Cart extends Component {
                         {attr.name === "Size" && !isNaN(products.size) ? <li className="attributes"> {products.size}</li> : isNaN(products.size) ?  <li className="attributes"> {products.size.charAt(0)}</li> : "" }
                         {attr.name === "Color" && products.color !== "" ? <li className={`attributes ${products.color}`}></li> : "" }
                         {attr.name === "Capacity" && products.capacity !== "" ? <li className="attributes"> {products.capacity}</li> : "" }
+                        {attr.name === "With USB 3 ports" && products.usb !== "" ? <li className="attributes"> {products.usb}</li> : "" }
+                        {attr.name === "Touch ID in keyboard" && products.touchID !== "" ? <li className="attributes"> {products.touchID}</li> : "" }
                     </div>
                   ))
                   }
@@ -121,8 +123,6 @@ class Cart extends Component {
 
             </div>
           </div>
-          
-            <button className='remove-item' onClick={()=> onDelete(index)}>-</button> 
         </div>
   </div>
       ))

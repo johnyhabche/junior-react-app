@@ -7,6 +7,7 @@ import Home from "./component/home/Home";
 import PDP from "./component/pdp/PDP";
 import CardOverlay from "./component/card-overlay/CardOverlay";
 import Cart from './component/cart/Cart';
+import Modal from './component/product-modal/Modal'
 
 class App extends PureComponent {
   constructor(props) {
@@ -25,6 +26,8 @@ class App extends PureComponent {
       openClose: false,
       notAvailable: false,
       total:[0],
+      openCloseModal: false,
+      addAllOptions: false,
       product: [
 
       ],
@@ -45,8 +48,14 @@ class App extends PureComponent {
     this.handleAttributWithTouchID = this.handleAttributWithTouchID.bind(this);
     this.setTotal = this.setTotal.bind(this);
     this.handleCurrencyCon = this.handleCurrencyCon.bind(this);
+    this.handleOpenCloseModal = this.handleOpenCloseModal.bind(this);
   }
 
+  handleOpenCloseModal(bool) {
+    this.setState({openCloseModal: !bool})
+    this.restAttributes();
+    this.pleaseAddAllOptions(false)
+  }
   handleCurrencyCon(bool) {
     this.setState({openCloseCurrency: !bool})
   }
@@ -75,6 +84,10 @@ class App extends PureComponent {
   notAvailableItem(bool) {
     this.setState({notAvailable: bool})
   }
+  pleaseAddAllOptions(bool) {
+    this.setState({addAllOptions: bool})
+
+  }
   //Add customer product to card
   //param picked item object
   addToCart(item) {
@@ -100,21 +113,26 @@ class App extends PureComponent {
 
 
     if(item.inStock === true) {
-      this.setState((prevState) => {
-        const newItem = {...item,
-            itemId: nextProductId, qty: 1,
-            color: pickedColor.color,
-            size: pickedSize.size,
-            capacity: pickedCapacity.capacity,
-            usb: pickedWithUsb.usb,
-            touchID: pickedWithTouchID.withTouchID,
-            curImage: 0
-      };
-        return {
-          nextProductId: prevState.nextProductId + 1,
-          product: [...product, newItem]
-        }
-      })
+
+        this.setState((prevState) => {
+          const newItem = {...item,
+              itemId: nextProductId, qty: 1,
+              color: pickedColor.color,
+              size: pickedSize.size,
+              capacity: pickedCapacity.capacity,
+              usb: pickedWithUsb.usb,
+              touchID: pickedWithTouchID.withTouchID,
+              curImage: 0
+        };
+        this.pleaseAddAllOptions(false)
+        if( newItem.color && newItem.capacity || newItem.size || newItem.capacity && newItem.usb && newItem.withTouchID) {
+          return {
+            nextProductId: prevState.nextProductId + 1,
+            product: [...product, newItem]
+          }
+        }else this.pleaseAddAllOptions(true)
+        })
+
     }else this.notAvailableItem(true)
 
   }
@@ -178,12 +196,33 @@ class App extends PureComponent {
             pickedWithTouchID,
             pickedWithUsb,
             total,
-            openCloseCurrency
+            openCloseCurrency,
+            openCloseModal,
+            addAllOptions
           } = this.state;
     
     return (
       <div className="App"> 
               <Router className="router">
+              {openCloseModal === true ? 
+              <Modal openCloseModal = {openCloseModal} 
+                     handleOpenCloseModal={this.handleOpenCloseModal} 
+                     productDetails = {productDetail}
+                     handleAttributColor = {this.handleAttributColor}
+                     handleAttributSize = {this.handleAttributSize}
+                     handleAttributCapacity = {this.handleAttributCapacity}
+                     handleAttributWithTouchID = {this.handleAttributWithTouchID}
+                     handleAttributWithUSB = {this.handleAttributWithUSB}
+                     notAvailable = {notAvailable}
+                     pickedColor = {pickedColor}
+                     pickedCapacity = {pickedCapacity}
+                     pickedSize = {pickedSize}
+                     pickedWithTouchID = {pickedWithTouchID}
+                     pickedWithUsb = {pickedWithUsb}
+                     selectedProduct = {this.addToCart}
+                     addAllOptions = {addAllOptions}
+                     
+              /> : "" }
               <Header
                 handleCurrencyCon = {this.handleCurrencyCon}
                 openCloseCurrency = {openCloseCurrency}
@@ -209,7 +248,9 @@ class App extends PureComponent {
                 <Route path={productCategory}
                   element= {<Content cat = {productCategory} 
                   productDetail ={this.productDetails}
-                  currency = {currentCurrency} />} 
+                  currency = {currentCurrency} 
+                  openCloseModal = {openCloseModal}
+                  handleOpenCloseModal= {this.handleOpenCloseModal}/>} 
                     />
 
                 <Route path={productCategory + "/" + productDetail.id}  
@@ -228,6 +269,7 @@ class App extends PureComponent {
                   pickedSize = {pickedSize}
                   pickedWithTouchID = {pickedWithTouchID}
                   pickedWithUsb = {pickedWithUsb}
+                  addAllOptions = {addAllOptions}
                   
                   />} 
                   />
@@ -236,7 +278,6 @@ class App extends PureComponent {
                   element= {<Cart 
                   selectedProduct = {product}
                   currency = {currentCurrency}
-                  onDelete = {this.onDelete}
                   />} 
                   />
                 </Routes>
